@@ -14,7 +14,7 @@ namespace ProcessorSim
             var instructionsResolver = new InstructionsResolver(processor, actionRetriever);
             var variablesRetriever = new VariablesRetriever();
 
-            var instructionsToExecute = ReadResource("ProcessorSim.Instructions.InstructionsToExecute.txt");
+            var instructionsToExecute = ReadResource("ProcessorSim.Instructions.InstructionsToExecute.txt")!;
             var variables = variablesRetriever.GetVariables(instructionsToExecute);
 
             foreach (var variable in variables)
