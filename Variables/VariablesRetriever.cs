@@ -2,7 +2,7 @@
 {
     internal class VariablesRetriever
     {
-        public List<Variable> GetVariables(List<string>? instructionsToExecute)
+        public List<Variable> GetVariables(List<string> instructionsToExecute)
         {
             var variablesList = new List<Variable>();
 
@@ -11,7 +11,7 @@
                 if (instruction.StartsWith("."))
                 {
                     var parts = instruction.Split(' ');
-                    var lineType = GetLineType(instruction);
+                    var lineType = GetLineType(parts[0]);
 
                     var variable = new Variable(lineType, parts[1]);
                     variablesList.Add(variable);
