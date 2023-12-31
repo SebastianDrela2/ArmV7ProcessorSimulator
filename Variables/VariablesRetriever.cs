@@ -11,9 +11,12 @@
                 if (instruction.StartsWith("."))
                 {
                     var parts = instruction.Split(' ');
-                    var lineType = GetLineType(parts[0]);
+                    var typeDefinition = parts[0];
+                    var value = parts[1];
 
-                    var variable = new Variable(lineType, parts[1]);
+                    var lineType = GetLineType(typeDefinition);
+
+                    var variable = new Variable(lineType, value);
                     variablesList.Add(variable);
                 }
             }
