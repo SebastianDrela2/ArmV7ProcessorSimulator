@@ -1,0 +1,6 @@
+﻿MOV r1 2
+MOV r2 3
+ADD r3 r1 r2
+EXIT
+
+.list "1","2","3"
