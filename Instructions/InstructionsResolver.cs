@@ -16,17 +16,25 @@
             var instruction = ParseInstruction(line);
             var operation = instruction.Operation;
 
-            var value = ParseParameterValue(instruction.FirstParameter);
             var value2 = ParseParameterValue(instruction.SecondParameter);
             var value3 = ParseParameterValue(instruction.ThirdParameter);
 
             if (instruction.FirstParameter.StartsWith("r"))
             {
                 var register = ParseRegister(instruction.FirstParameter);
-                return _actionRetriever.GetRegisterInstruction(operation, register, value2, value3);
+                if (!string.IsNullOrEmpty(instruction.SecondParameter))
+                {
+                    var secondParameterIsNotAnInt = !int.TryParse(instruction.SecondParameter, out _);
+
+                    if (secondParameterIsNotAnInt && instruction.Operation is "LDR")
+                    {
+                        return _actionRetriever.LoadDataIntoRegister(register, instruction.SecondParameter);
+                    }
+                }
+                return _actionRetriever.GetArithemticRegisterInstruction(operation, register, value2, value3);
             }
 
-            return _actionRetriever.GetNonRegisterInstruction(operation, value, value2);
+            return _actionRetriever.GetNonRegisterInstruction(operation);
         }
 
         private int ParseParameterValue(string parameter)

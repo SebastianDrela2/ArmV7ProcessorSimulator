@@ -4,10 +4,14 @@
     {
         public LineType LineType { get; set; }
         public object? Value { get; set; }
+        public string VariableName { get; set; } // i am not making a linker.
 
-        public Variable(LineType lineType, object value)
+        public int MemoryLocation = -1;
+
+        public Variable(LineType lineType, object value, string variableName)
         {
             LineType = lineType;
+            VariableName = variableName;
             Value = lineType switch
             {
                 LineType.Integer => Convert.ToInt32(value),

@@ -50,11 +50,18 @@ namespace ProcessorSim.Instructions
             register.Value = value;
         }
 
-        public void LoadValIntoRam(Variable variable)
+        public void LoadDataIntoRegister(Register register, string value)
+        {
+            var valueMemoryLocation = _processor.Variables.First(x => x.VariableName == value).MemoryLocation;
+            register.Value = _processor.RamStack[valueMemoryLocation];
+        }
+
+        public void LoadValIntoStack(Variable variable)
         {
             if (variable.Value is string stringValue)
             {
                 var ramPos = _processor.GetFreeRamPos(stringValue.Length);
+                variable.MemoryLocation = ramPos;
                 foreach (var c in stringValue)
                 {
                     _processor.RamStack[ramPos] = Convert.ToInt32(c);
@@ -64,16 +71,19 @@ namespace ProcessorSim.Instructions
             else if (variable.Value is char charValue)
             {
                 var ramPos = _processor.GetFreeRamPos(1);
+                variable.MemoryLocation = ramPos;
                 _processor.RamStack[ramPos] = charValue;
             }
             else if (variable.Value is int intValue)
             {
                 var ramPos = _processor.GetFreeRamPos(1);
+                variable.MemoryLocation = ramPos;
                 _processor.RamStack[ramPos] = intValue;
             }
             else if (variable.Value is List<string> list)
             {
                 var ramPos = _processor.GetFreeRamPos(list.Count);
+                variable.MemoryLocation = ramPos;
 
                 foreach (var item in list)
                 {

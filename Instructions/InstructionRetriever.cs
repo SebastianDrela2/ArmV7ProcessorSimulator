@@ -8,7 +8,10 @@
             _instructionExecutor = instructionExecutor;
         }
 
-        public Action GetRegisterInstruction(string operation, Register register, int value, int value2)
+        public Action LoadDataIntoRegister(Register register, string variableName) =>
+           () => _instructionExecutor.LoadDataIntoRegister(register, variableName);
+        
+        public Action GetArithemticRegisterInstruction(string operation, Register register, int value, int value2)
         {
             return operation switch
             {

@@ -22,6 +22,8 @@ namespace ProcessorSim
                 processor.LoadValIntoStack(instructionExecutor, variable);
             }
 
+            processor.SetVariables(variables);
+
             foreach (var instruction in instructionsToExecute)
             {
                 if (!processor.ShouldStop)

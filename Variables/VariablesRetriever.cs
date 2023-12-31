@@ -12,11 +12,12 @@
                 {
                     var parts = instruction.Split(' ');
                     var typeDefinition = parts[0];
-                    var value = parts[1];
+                    var variableName = parts[1];
+                    var value = parts[2];
 
                     var lineType = GetLineType(typeDefinition);
 
-                    var variable = new Variable(lineType, value);
+                    var variable = new Variable(lineType, value, variableName);
                     variablesList.Add(variable);
                 }
             }

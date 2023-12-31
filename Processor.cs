@@ -8,6 +8,7 @@ namespace ProcessorSim
         public bool ShouldStop;
         public int[] RamStack;
         public Register[] Registers;
+        public List<Variable> Variables;
 
         public Processor(int amountOfRam, int amountOfRegisters)
         {
@@ -36,7 +37,12 @@ namespace ProcessorSim
 
         public void LoadValIntoStack(InstructionExecutor instructionExecutor, Variable variable)
         {
-            instructionExecutor.LoadValIntoRam(variable);
+            instructionExecutor.LoadValIntoStack(variable);
+        }
+
+        public void SetVariables(List<Variable> variables)
+        {
+            Variables = variables;
         }
 
         public void ExecuteInstruction(InstructionsResolver instructionsResolver, string instruction)
