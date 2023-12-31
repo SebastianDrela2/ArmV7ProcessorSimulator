@@ -61,6 +61,11 @@ namespace ProcessorSim.Instructions
                     ramPos += 1;
                 }
             }
+            else if (variable.Value is char charValue)
+            {
+                var ramPos = _processor.GetFreeRamPos(1);
+                _processor.RamStack[ramPos] = charValue;
+            }
             else if (variable.Value is int intValue)
             {
                 var ramPos = _processor.GetFreeRamPos(1);

@@ -1,6 +1,4 @@
-﻿using ProcessorSim.Instructions;
-
-namespace ProcessorSim
+﻿namespace ProcessorSim.Instructions
 {
     internal class InstructionRetriever
     {
