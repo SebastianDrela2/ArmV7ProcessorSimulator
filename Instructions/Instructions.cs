@@ -102,6 +102,38 @@ namespace ProcessorSim.Instructions
             
         }
 
+        public void JumpBranchIfGreaterThanOrEquals(string branchName)
+        {
+            if (_processor.Registers["cspr"].Value >= 0)
+            {
+                JumpBranch(branchName);
+            }
+        }
+
+        public void JumpBranchIfGreaterThan(string branchName)
+        {
+            if (_processor.Registers["cspr"].Value > 0)
+            {
+                JumpBranch(branchName);
+            }
+        }
+
+        public void JumpBranchIfLessThan(string branchName)
+        {
+            if (_processor.Registers["cspr"].Value < 0)
+            {
+                JumpBranch(branchName);
+            }
+        }
+
+        public void JumpBranchIfLessThanEquals(string branchName)
+        {
+            if (_processor.Registers["cspr"].Value < 0)
+            {
+                JumpBranch(branchName);
+            }
+        }
+
         public void EndBranch()
         {
             _processor.CurrentInstructionNum = _processor.Registers["lr"].Value;

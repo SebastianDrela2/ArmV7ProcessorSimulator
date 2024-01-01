@@ -30,7 +30,11 @@
             return operation switch
             {
                 "EXIT" => () => _instructionExecutor.Exit(),
-                "BL" => () => _instructionExecutor.JumpBranch(firstParameter),
+                "BLA" => () => _instructionExecutor.JumpBranch(firstParameter),
+                "BGE" => () => _instructionExecutor.JumpBranchIfGreaterThanOrEquals(firstParameter),
+                "BGT" => () => _instructionExecutor.JumpBranchIfGreaterThan(firstParameter),
+                "BLE" => () => _instructionExecutor.JumpBranchIfLessThanEquals(firstParameter),
+                "BLT" => () => _instructionExecutor.JumpBranchIfLessThan(firstParameter),
                 "END" => () => _instructionExecutor.EndBranch(),
                 "CMP" => () => _instructionExecutor.Compare(int.Parse(firstParameter), int.Parse(secondParameter)),
                 _ => throw new NotImplementedException()
