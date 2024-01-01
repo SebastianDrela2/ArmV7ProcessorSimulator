@@ -93,6 +93,20 @@ namespace ProcessorSim.Instructions
             }
         }
 
+        public void JumpBranch(string branchName)
+        {
+            var branchLine = _processor.InstructionsToExecute.First(x => x.Contains($"{branchName}:"));
+            var branchIndex = _processor.InstructionsToExecute.IndexOf(branchLine);
+            _processor.Registers[5].Value = _processor.CurrentLine;
+            _processor.CurrentLine = branchIndex;
+            
+        }
+
+        public void EndBranch()
+        {
+            _processor.CurrentLine = _processor.Registers[5].Value;
+        }
+
         public void Exit()
         {
             _processor.ShouldStop = true;

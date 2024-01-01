@@ -1,5 +1,11 @@
 ﻿MOV r1 5
 LDR r2 lista
+BL branch
 EXIT
+
+branch:
+MOV r3 10
+ADD r4 2 10
+END
 
 .list lista "1","2","3"

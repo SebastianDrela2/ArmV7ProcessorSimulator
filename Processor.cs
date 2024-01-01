@@ -1,10 +1,13 @@
 ﻿using ProcessorSim.Instructions;
 using ProcessorSim.Variables;
+using System.Reflection;
 
 namespace ProcessorSim
 {
     internal class Processor
     {
+        public List<string> InstructionsToExecute;
+        public int CurrentLine;
         public bool ShouldStop;
         public int[] RamStack;
         public Register[] Registers;
@@ -12,6 +15,8 @@ namespace ProcessorSim
 
         public Processor(int amountOfRam, int amountOfRegisters)
         {
+            InstructionsToExecute = ReadResource("ProcessorSim.Instructions.InstructionsToExecute.txt")!;
+            CurrentLine = 0;
             RamStack = new int[amountOfRam];
             Registers = new Register[amountOfRegisters];
             ShouldStop = false;
@@ -49,6 +54,38 @@ namespace ProcessorSim
         {
             var action = instructionsResolver.ResolveInstruction(instruction);
             action.Invoke();
+        }
+
+        public string GetInstruction()
+        {
+            return InstructionsToExecute[CurrentLine];
+        }
+
+        private static List<string>? ReadResource(string resourceName)
+        {
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+
+            if (stream == null)
+            {
+                return null;
+            }
+
+            var returnList = new List<string>();
+
+            using var reader = new StreamReader(stream);
+
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+
+                if (line != null)
+                {
+                    returnList.Add(line);
+                }
+            }
+
+            return returnList;
+
         }
     }
 }

@@ -14,8 +14,7 @@ namespace ProcessorSim
             var instructionsResolver = new InstructionsResolver(processor, actionRetriever);
             var variablesRetriever = new VariablesRetriever();
 
-            var instructionsToExecute = ReadResource("ProcessorSim.Instructions.InstructionsToExecute.txt")!;
-            var variables = variablesRetriever.GetVariables(instructionsToExecute);
+            var variables = variablesRetriever.GetVariables(processor.InstructionsToExecute);
 
             foreach (var variable in variables)
             {
@@ -24,40 +23,18 @@ namespace ProcessorSim
 
             processor.SetVariables(variables);
 
-            foreach (var instruction in instructionsToExecute)
+            while (processor.CurrentInstructionNum < processor.InstructionsToExecute.Count)
             {
                 if (!processor.ShouldStop)
                 {
-                    processor.ExecuteInstruction(instructionsResolver, instruction);
+                    break;
                 }
+
+                var instruction = processor.GetInstruction();
+                processor.ExecuteInstruction(instructionsResolver, instruction);
+
+                processor.CurrentInstructionNum++;
             }
-        }
-
-        private static List<string>? ReadResource(string resourceName)
-        {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
-
-            if (stream == null)
-            {
-                return null;
-            }
-
-            var returnList = new List<string>();
-
-            using var reader = new StreamReader(stream);
-
-            while (!reader.EndOfStream)
-            {
-                var line = reader.ReadLine();
-
-                if (line != null)
-                {
-                    returnList.Add(line);
-                }
-            }
-
-            return returnList;
-
         }
     }
 }

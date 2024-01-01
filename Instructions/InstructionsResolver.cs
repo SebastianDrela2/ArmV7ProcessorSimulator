@@ -34,7 +34,7 @@
                 return _actionRetriever.GetArithemticRegisterInstruction(operation, register, value2, value3);
             }
 
-            return _actionRetriever.GetNonRegisterInstruction(operation);
+            return _actionRetriever.GetNonRegisterInstruction(operation, instruction.FirstParameter);
         }
 
         private int ParseParameterValue(string parameter)
@@ -71,6 +71,15 @@
                     FirstParameter = parts[1],
                     SecondParameter = parts[2],
                     ThirdParameter = thirdParameter
+                };
+            }
+
+            if (parts.Length > 1)
+            {
+                return new Instruction
+                {
+                    Operation = parts[0],
+                    FirstParameter = parts[1]
                 };
             }
 
