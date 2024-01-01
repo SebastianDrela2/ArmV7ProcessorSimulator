@@ -1,4 +1,6 @@
-﻿namespace ProcessorSim.Instructions
+﻿using ProcessorSim.PhysicalVirtualComponents;
+
+namespace ProcessorSim.Instructions
 {
     internal class InstructionsResolver
     {

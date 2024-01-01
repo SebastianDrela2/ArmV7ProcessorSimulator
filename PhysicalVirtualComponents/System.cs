@@ -1,4 +1,4 @@
-﻿namespace ProcessorSim
+﻿namespace ProcessorSim.PhysicalVirtualComponents
 {
     internal class System
     {
@@ -24,7 +24,7 @@
 
         public void WriteToConsole(int messageRamPos, int messageLength)
         {
-            for (var i = 0; i < messageLength ; i++)
+            for (var i = 0; i < messageLength; i++)
             {
                 var c = Convert.ToChar(_processor.RamStack[messageRamPos]);
                 Console.Write(c);
@@ -32,6 +32,6 @@
                 messageRamPos++;
             }
         }
-        
+
     }
 }

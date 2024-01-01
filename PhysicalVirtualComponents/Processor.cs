@@ -2,7 +2,7 @@
 using ProcessorSim.Variables;
 using System.Reflection;
 
-namespace ProcessorSim
+namespace ProcessorSim.PhysicalVirtualComponents
 {
     internal class Processor
     {
@@ -40,7 +40,7 @@ namespace ProcessorSim
                 }
             }
 
-            return -1 ;
+            return -1;
         }
 
         public void LoadValIntoStack(InstructionExecutor instructionExecutor, Variable variable)

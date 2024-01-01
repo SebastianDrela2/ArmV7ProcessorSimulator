@@ -1,4 +1,5 @@
 ﻿using ProcessorSim.Instructions;
+using ProcessorSim.PhysicalVirtualComponents;
 using ProcessorSim.Variables;
 
 namespace ProcessorSim
@@ -8,7 +9,7 @@ namespace ProcessorSim
         static void Main()
         {
             var processor = new Processor(100, 7);
-            var system = new System(processor);
+            var system = new PhysicalVirtualComponents.System(processor);
             var instructionExecutor = new InstructionExecutor(processor, system);
             var actionRetriever = new InstructionRetriever(instructionExecutor);
             var instructionsResolver = new InstructionsResolver(processor, actionRetriever);

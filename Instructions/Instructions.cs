@@ -1,13 +1,14 @@
-﻿using ProcessorSim.Variables;
+﻿using ProcessorSim.PhysicalVirtualComponents;
+using ProcessorSim.Variables;
 
 namespace ProcessorSim.Instructions
 {
     internal class InstructionExecutor
     {
         private readonly Processor _processor;
-        private readonly System _system;
+        private readonly PhysicalVirtualComponents.System _system;
 
-        public InstructionExecutor(Processor processor, System system)
+        public InstructionExecutor(Processor processor, PhysicalVirtualComponents.System system)
         {
             _processor = processor;
             _system = system;

@@ -1,4 +1,4 @@
-﻿namespace ProcessorSim
+﻿namespace ProcessorSim.PhysicalVirtualComponents
 {
     internal class Register
     {
