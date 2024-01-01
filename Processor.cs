@@ -7,7 +7,7 @@ namespace ProcessorSim
     internal class Processor
     {
         public List<string> InstructionsToExecute;
-        public int CurrentLine;
+        public int CurrentInstructionNum;
         public bool ShouldStop;
         public int[] RamStack;
         public Register[] Registers;
@@ -16,7 +16,7 @@ namespace ProcessorSim
         public Processor(int amountOfRam, int amountOfRegisters)
         {
             InstructionsToExecute = ReadResource("ProcessorSim.Instructions.InstructionsToExecute.txt")!;
-            CurrentLine = 0;
+            CurrentInstructionNum = 0;
             RamStack = new int[amountOfRam];
             Registers = new Register[amountOfRegisters];
             ShouldStop = false;
@@ -58,7 +58,7 @@ namespace ProcessorSim
 
         public string GetInstruction()
         {
-            return InstructionsToExecute[CurrentLine];
+            return InstructionsToExecute[CurrentInstructionNum];
         }
 
         private static List<string>? ReadResource(string resourceName)
