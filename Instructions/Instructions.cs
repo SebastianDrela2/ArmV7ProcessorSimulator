@@ -128,7 +128,7 @@ namespace ProcessorSim.Instructions
 
         public void JumpBranchIfLessThanEquals(string branchName)
         {
-            if (_processor.Registers["cspr"].Value < 0)
+            if (_processor.Registers["cspr"].Value <= 0)
             {
                 JumpBranch(branchName);
             }
