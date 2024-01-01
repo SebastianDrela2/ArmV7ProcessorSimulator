@@ -25,13 +25,14 @@
             };
         }
 
-        public Action GetNonRegisterInstruction(string operation, string firstParameter)
+        public Action GetNonRegisterInstruction(string operation, string firstParameter, string secondParameter)
         {
             return operation switch
             {
                 "EXIT" => () => _instructionExecutor.Exit(),
                 "BL" => () => _instructionExecutor.JumpBranch(firstParameter),
                 "END" => () => _instructionExecutor.EndBranch(),
+                "CMP" => () => _instructionExecutor.Compare(int.Parse(firstParameter), int.Parse(secondParameter)),
                 _ => throw new NotImplementedException()
             };
         }

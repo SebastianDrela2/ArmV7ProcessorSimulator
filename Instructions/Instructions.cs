@@ -97,14 +97,20 @@ namespace ProcessorSim.Instructions
         {
             var branchLine = _processor.InstructionsToExecute.First(x => x.Contains($"{branchName}:"));
             var branchIndex = _processor.InstructionsToExecute.IndexOf(branchLine);
-            _processor.Registers[5].Value = _processor.CurrentLine;
-            _processor.CurrentLine = branchIndex;
+            _processor.Registers["lr"].Value = _processor.CurrentInstructionNum;
+            _processor.CurrentInstructionNum = branchIndex;
             
         }
 
         public void EndBranch()
         {
-            _processor.CurrentLine = _processor.Registers[5].Value;
+            _processor.CurrentInstructionNum = _processor.Registers["lr"].Value;
+        }
+
+        public void Compare(int value1, int value2)
+        {
+            var comparisonValue = value1 - value2;
+            _processor.Registers["cspr"].Value = comparisonValue;
         }
 
         public void Exit()

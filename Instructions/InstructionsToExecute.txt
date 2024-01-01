@@ -6,6 +6,7 @@ EXIT
 branch:
 MOV r3 10
 ADD r4 2 10
+CMP 3 6
 END
 
 .list lista "1","2","3"

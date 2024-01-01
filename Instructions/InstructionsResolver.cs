@@ -19,7 +19,7 @@
             var value2 = ParseParameterValue(instruction.SecondParameter);
             var value3 = ParseParameterValue(instruction.ThirdParameter);
 
-            if (instruction.FirstParameter.StartsWith("r"))
+            if (_processor.Registers.Any(x => x.Key == instruction.FirstParameter))
             {
                 var register = ParseRegister(instruction.FirstParameter);
                 if (!string.IsNullOrEmpty(instruction.SecondParameter))
@@ -34,12 +34,12 @@
                 return _actionRetriever.GetArithemticRegisterInstruction(operation, register, value2, value3);
             }
 
-            return _actionRetriever.GetNonRegisterInstruction(operation, instruction.FirstParameter);
+            return _actionRetriever.GetNonRegisterInstruction(operation, instruction.FirstParameter, instruction.SecondParameter);
         }
 
         private int ParseParameterValue(string parameter)
         {
-            if (parameter.StartsWith('r'))
+            if (_processor.Registers.Any(x => x.Key == parameter))
             {
                 return ParseRegister(parameter).Value;
             }
@@ -91,10 +91,7 @@
 
         private Register ParseRegister(string registerLine)
         {
-            var subStringedRegisterLine = registerLine.Substring(1);
-            var numericPart = int.Parse(subStringedRegisterLine);
-            return _processor.Registers[numericPart];
-
+            return _processor.Registers[registerLine];
         }
     }
 }

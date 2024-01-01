@@ -25,14 +25,13 @@ namespace ProcessorSim
 
             while (processor.CurrentInstructionNum < processor.InstructionsToExecute.Count)
             {
-                if (!processor.ShouldStop)
+                if (processor.ShouldStop)
                 {
                     break;
                 }
 
                 var instruction = processor.GetInstruction();
                 processor.ExecuteInstruction(instructionsResolver, instruction);
-
                 processor.CurrentInstructionNum++;
             }
         }

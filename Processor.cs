@@ -10,21 +10,24 @@ namespace ProcessorSim
         public int CurrentInstructionNum;
         public bool ShouldStop;
         public int[] RamStack;
-        public Register[] Registers;
+        public Dictionary<string, Register> Registers;
         public List<Variable> Variables;
 
         public Processor(int amountOfRam, int amountOfRegisters)
         {
+            Registers = new Dictionary<string, Register>();
             InstructionsToExecute = ReadResource("ProcessorSim.Instructions.InstructionsToExecute.txt")!;
             CurrentInstructionNum = 0;
             RamStack = new int[amountOfRam];
-            Registers = new Register[amountOfRegisters];
             ShouldStop = false;
 
             for (var i = 0; i < amountOfRegisters; i++)
             {
-                Registers[i] = new Register(); 
+                Registers.Add($"r{i}", new Register());
             }
+
+            Registers.Add("lr", new Register());
+            Registers.Add("cspr", new Register());
         }
 
         public int GetFreeRamPos(int neededSize)
