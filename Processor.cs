@@ -21,7 +21,7 @@ namespace ProcessorSim
             RamStack = new int[amountOfRam];
             ShouldStop = false;
 
-            for (var i = 0; i < amountOfRegisters; i++)
+            for (var i = 0; i <= amountOfRegisters; i++)
             {
                 Registers.Add($"r{i}", new Register());
             }
@@ -62,6 +62,11 @@ namespace ProcessorSim
         public string GetInstruction()
         {
             return InstructionsToExecute[CurrentInstructionNum];
+        }
+
+        public int GetMemoryLocationForVariable(string variableName)
+        {
+            return Variables.First(x => x.VariableName == variableName).MemoryLocation;
         }
 
         private static List<string>? ReadResource(string resourceName)

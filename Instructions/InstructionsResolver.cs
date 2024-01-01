@@ -28,7 +28,7 @@
 
                     if (secondParameterIsNotAnInt && instruction.Operation is "LDR")
                     {
-                        return _actionRetriever.LoadDataIntoRegister(register, instruction.SecondParameter);
+                        return _actionRetriever.LoadMemoryIntoRegister(register, instruction.SecondParameter);
                     }
                 }
                 return _actionRetriever.GetArithemticRegisterInstruction(operation, register, value2, value3);

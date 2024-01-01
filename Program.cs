@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using ProcessorSim.Instructions;
+﻿using ProcessorSim.Instructions;
 using ProcessorSim.Variables;
 
 namespace ProcessorSim
@@ -9,7 +8,8 @@ namespace ProcessorSim
         static void Main()
         {
             var processor = new Processor(100, 7);
-            var instructionExecutor = new InstructionExecutor(processor);
+            var system = new System(processor);
+            var instructionExecutor = new InstructionExecutor(processor, system);
             var actionRetriever = new InstructionRetriever(instructionExecutor);
             var instructionsResolver = new InstructionsResolver(processor, actionRetriever);
             var variablesRetriever = new VariablesRetriever();

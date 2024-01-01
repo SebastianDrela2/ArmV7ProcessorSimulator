@@ -8,8 +8,8 @@
             _instructionExecutor = instructionExecutor;
         }
 
-        public Action LoadDataIntoRegister(Register register, string variableName) =>
-           () => _instructionExecutor.LoadDataIntoRegister(register, variableName);
+        public Action LoadMemoryIntoRegister(Register register, string variableName) =>
+           () => _instructionExecutor.LoadMemoryIntoRegister(register, variableName);
         
         public Action GetArithemticRegisterInstruction(string operation, Register register, int value, int value2)
         {
@@ -37,6 +37,7 @@
                 "BLT" => () => _instructionExecutor.JumpBranchIfLessThan(firstParameter),
                 "END" => () => _instructionExecutor.EndBranch(),
                 "CMP" => () => _instructionExecutor.Compare(int.Parse(firstParameter), int.Parse(secondParameter)),
+                "SWI" => () => _instructionExecutor.DoSystemInterupt(int.Parse(firstParameter)),
                 _ => throw new NotImplementedException()
             };
         }

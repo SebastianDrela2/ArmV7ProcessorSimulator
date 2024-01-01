@@ -5,9 +5,12 @@ namespace ProcessorSim.Instructions
     internal class InstructionExecutor
     {
         private readonly Processor _processor;
-        public InstructionExecutor(Processor processor)
+        private readonly System _system;
+
+        public InstructionExecutor(Processor processor, System system)
         {
             _processor = processor;
+            _system = system;
         }
 
         public void MoveIntoRegister(Register register, int value)
@@ -50,10 +53,10 @@ namespace ProcessorSim.Instructions
             register.Value = value;
         }
 
-        public void LoadDataIntoRegister(Register register, string value)
+        public void LoadMemoryIntoRegister(Register register, string value)
         {
-            var valueMemoryLocation = _processor.Variables.First(x => x.VariableName == value).MemoryLocation;
-            register.Value = _processor.RamStack[valueMemoryLocation];
+            var valueMemoryLocation = _processor.GetMemoryLocationForVariable(value);
+            register.Value = valueMemoryLocation;
         }
 
         public void LoadValIntoStack(Variable variable)
@@ -62,6 +65,7 @@ namespace ProcessorSim.Instructions
             {
                 var ramPos = _processor.GetFreeRamPos(stringValue.Length);
                 variable.MemoryLocation = ramPos;
+
                 foreach (var c in stringValue)
                 {
                     _processor.RamStack[ramPos] = Convert.ToInt32(c);
@@ -143,6 +147,14 @@ namespace ProcessorSim.Instructions
         {
             var comparisonValue = value1 - value2;
             _processor.Registers["cspr"].Value = comparisonValue;
+        }
+
+        public void DoSystemInterupt(int value)
+        {
+            if (value == 0)
+            {
+                _system.DoSystemInterupt();
+            }
         }
 
         public void Exit()
