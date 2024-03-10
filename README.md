@@ -27,7 +27,7 @@
 
 The chosen action corresponds to the execution of the respective non-register operation, taking into account any required parameters.
 
-Example instruction _(Change instruction to execute in `Instructions\InstructionsToExecute.txt`:
+Example instruction _(Change instruction to execute in `Instructions\InstructionsToExecute.txt`)_:
 
 ```
 ﻿MOV r1 5
