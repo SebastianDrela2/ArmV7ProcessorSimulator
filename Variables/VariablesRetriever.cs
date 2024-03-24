@@ -25,14 +25,14 @@
             return variablesList;
         }
 
-        private LineType GetLineType(string instruction)
+        private VariableLineType GetLineType(string instruction)
         {
             return instruction switch
             {
-                _ when instruction.Contains("list") => LineType.List,
-                _ when instruction.Contains("int") => LineType.Integer,
-                _ when instruction.Contains("string") => LineType.String,
-                _ when instruction.Contains("char") => LineType.Char,
+                _ when instruction.Contains("list") => VariableLineType.List,
+                _ when instruction.Contains("int") => VariableLineType.Integer,
+                _ when instruction.Contains("string") => VariableLineType.String,
+                _ when instruction.Contains("char") => VariableLineType.Char,
                 _ => throw new NotImplementedException(),
             };
         }

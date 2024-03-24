@@ -2,22 +2,22 @@
 {
     public class Variable
     {
-        public LineType LineType { get; set; }
+        public VariableLineType LineType { get; set; }
         public object? Value { get; set; }
         public string VariableName { get; set; } // i am not making a linker.
 
         public int MemoryLocation = -1;
 
-        public Variable(LineType lineType, object value, string variableName)
+        public Variable(VariableLineType lineType, object value, string variableName)
         {
             LineType = lineType;
             VariableName = variableName;
             Value = lineType switch
             {
-                LineType.Integer => Convert.ToInt32(value),
-                LineType.Char => Convert.ToChar(value),
-                LineType.String => Convert.ToString(value),
-                LineType.List => CreateList(value),
+                VariableLineType.Integer => Convert.ToInt32(value),
+                VariableLineType.Char => Convert.ToChar(value),
+                VariableLineType.String => Convert.ToString(value),
+                VariableLineType.List => CreateList(value),
                 _ => throw new ArgumentException("Unsupported LineType")
             };
         }
@@ -62,13 +62,5 @@
 
             return resultList;
         }
-    }
-
-    public enum LineType
-    {
-        Integer,
-        List,
-        String,
-        Char
     }
 }
