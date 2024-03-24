@@ -35,7 +35,8 @@ namespace ProcessorSim
                 processor.ExecuteInstruction(instructionsResolver, instruction);
                 processor.CurrentInstructionNum++;
             }
-            
+
+            Console.WriteLine();            
             system.DisplayAllocatedStackMemory();
         }
     }

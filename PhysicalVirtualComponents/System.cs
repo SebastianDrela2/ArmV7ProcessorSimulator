@@ -31,6 +31,8 @@
 
                 messageRamPos++;
             }
+
+            Console.WriteLine();
         }
 
         public void DisplayAllocatedStackMemory()
