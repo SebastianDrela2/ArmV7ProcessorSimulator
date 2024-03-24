@@ -33,5 +33,19 @@
             }
         }
 
+        public void DisplayAllocatedStackMemory()
+        {
+            for (var pos = 0; pos < _processor.RamStack.Length; pos++)
+            {
+                if (_processor.RamStack[pos] is 0)
+                {
+                    // unallocated memory, just break no need to display anymore.
+                    break;
+                }
+
+                Console.WriteLine($"Ram Pos: {pos} Value: {_processor.RamStack[pos]}");
+            }
+        }
+
     }
 }
