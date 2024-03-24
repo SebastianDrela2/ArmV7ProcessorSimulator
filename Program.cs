@@ -11,8 +11,8 @@ namespace ProcessorSim
             var processor = new Processor(100, 7);
             var system = new PhysicalVirtualComponents.System(processor);
             var instructionExecutor = new InstructionExecutor(processor, system);
-            var actionRetriever = new InstructionRetriever(instructionExecutor);
-            var instructionsResolver = new InstructionsResolver(processor, actionRetriever);
+            var instructionRetriever = new InstructionRetriever(instructionExecutor);
+            var instructionsResolver = new InstructionsResolver(processor, instructionRetriever);
             var variablesRetriever = new VariablesRetriever();
 
             var variables = variablesRetriever.GetVariables(processor.InstructionsToExecute);

@@ -56,39 +56,28 @@ namespace ProcessorSim.Instructions
 
         private Instruction ParseInstruction(string input)
         {
-            var parts = input.Split(' ');
+            var parts = input.Split(' ');           
+            var instruction = new Instruction();
 
-            var thirdParameter = string.Empty;
+            instruction.Operation = parts[0];
 
-            if (parts.Length > 3)
+            if (parts.Length > 1)
             {
-                thirdParameter = parts[3];
+                instruction.FirstParameter = parts[1];
             }
 
             if (parts.Length > 2)
             {
-                return new Instruction
-                {
-                    Operation = parts[0],
-                    FirstParameter = parts[1],
-                    SecondParameter = parts[2],
-                    ThirdParameter = thirdParameter
-                };
+                instruction.SecondParameter = parts[2];
             }
 
-            if (parts.Length > 1)
+            if (parts.Length > 3)
             {
-                return new Instruction
-                {
-                    Operation = parts[0],
-                    FirstParameter = parts[1]
-                };
+                instruction.ThirdParameter = parts[3];
+
             }
 
-            return new Instruction
-            {
-                Operation = parts[0]
-            };
+            return instruction;
         }
 
         private Register ParseRegister(string registerLine)
