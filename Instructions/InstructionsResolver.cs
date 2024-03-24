@@ -15,28 +15,32 @@ namespace ProcessorSim.Instructions
         }
         public Action ResolveInstruction(string line)
         {
-            var instruction = ParseInstruction(line);
-            var operation = instruction.Operation;
-
-            var value2 = ParseParameterValue(instruction.SecondParameter);
-            var value3 = ParseParameterValue(instruction.ThirdParameter);
-
+            var instruction = ParseInstruction(line);           
+            
             if (_processor.Registers.Any(x => x.Key == instruction.FirstParameter))
             {
-                var register = ParseRegister(instruction.FirstParameter);
-                if (!string.IsNullOrEmpty(instruction.SecondParameter))
-                {
-                    var secondParameterIsNotAnInt = !int.TryParse(instruction.SecondParameter, out _);
-
-                    if (secondParameterIsNotAnInt && instruction.Operation is "LDR")
-                    {
-                        return _actionRetriever.LoadMemoryIntoRegister(register, instruction.SecondParameter);
-                    }
-                }
-                return _actionRetriever.GetArithemticRegisterInstruction(operation, register, value2, value3);
+                return GetRegisterAction(instruction);
             }
 
-            return _actionRetriever.GetNonRegisterInstruction(operation, instruction.FirstParameter, instruction.SecondParameter);
+            return _actionRetriever.GetNonRegisterInstruction(instruction);
+        }
+
+        private Action GetRegisterAction(Instruction instruction)
+        {
+            var parsedSecondValue = ParseParameterValue(instruction.SecondParameter);
+            var parsedThirdValue = ParseParameterValue(instruction.ThirdParameter);
+            var register = ParseRegister(instruction.FirstParameter);
+
+            if (!string.IsNullOrEmpty(instruction.SecondParameter))
+            {
+                var secondParameterIsNotAnInt = !int.TryParse(instruction.SecondParameter, out _);
+
+                if (secondParameterIsNotAnInt && instruction.Operation is "LDR")
+                {
+                    return _actionRetriever.LoadMemoryIntoRegister(register, instruction.SecondParameter);
+                }
+            }
+            return _actionRetriever.GetArithemticRegisterInstruction(instruction.Operation, register, parsedSecondValue, parsedThirdValue);
         }
 
         private int ParseParameterValue(string parameter)

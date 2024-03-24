@@ -27,19 +27,19 @@ namespace ProcessorSim.Instructions
             };
         }
 
-        public Action GetNonRegisterInstruction(string operation, string firstParameter, string secondParameter)
+        public Action GetNonRegisterInstruction(Instruction instruction)
         {
-            return operation switch
+            return instruction.Operation switch
             {
                 "EXIT" => () => _instructionExecutor.Exit(),
-                "BLA" => () => _instructionExecutor.JumpBranch(firstParameter),
-                "BGE" => () => _instructionExecutor.JumpBranchIfGreaterThanOrEquals(firstParameter),
-                "BGT" => () => _instructionExecutor.JumpBranchIfGreaterThan(firstParameter),
-                "BLE" => () => _instructionExecutor.JumpBranchIfLessThanEquals(firstParameter),
-                "BLT" => () => _instructionExecutor.JumpBranchIfLessThan(firstParameter),
+                "BLA" => () => _instructionExecutor.JumpBranch(instruction.FirstParameter),
+                "BGE" => () => _instructionExecutor.JumpBranchIfGreaterThanOrEquals(instruction.FirstParameter),
+                "BGT" => () => _instructionExecutor.JumpBranchIfGreaterThan(instruction.FirstParameter),
+                "BLE" => () => _instructionExecutor.JumpBranchIfLessThanEquals(instruction.FirstParameter),
+                "BLT" => () => _instructionExecutor.JumpBranchIfLessThan(instruction.FirstParameter),
                 "END" => () => _instructionExecutor.EndBranch(),
-                "CMP" => () => _instructionExecutor.Compare(int.Parse(firstParameter), int.Parse(secondParameter)),
-                "SWI" => () => _instructionExecutor.DoSystemInterupt(int.Parse(firstParameter)),
+                "CMP" => () => _instructionExecutor.Compare(int.Parse(instruction.FirstParameter), int.Parse(instruction.SecondParameter)),
+                "SWI" => () => _instructionExecutor.DoSystemInterupt(int.Parse(instruction.FirstParameter)),
                 _ => throw new NotImplementedException()
             };
         }
