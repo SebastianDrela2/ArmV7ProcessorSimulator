@@ -24,6 +24,11 @@ namespace ProcessorSim
 
             processor.SetVariables(variables);
 
+            Execute(processor, system, instructionsResolver);
+        }
+
+        private static void Execute(Processor processor, PhysicalVirtualComponents.System system, InstructionsResolver instructionsResolver)
+        {           
             while (processor.CurrentInstructionNum < processor.InstructionsToExecute.Count)
             {
                 if (processor.ShouldStop)
@@ -36,7 +41,7 @@ namespace ProcessorSim
                 processor.CurrentInstructionNum++;
             }
 
-            Console.WriteLine();            
+            Console.WriteLine();
             system.DisplayAllocatedStackMemory();
         }
     }

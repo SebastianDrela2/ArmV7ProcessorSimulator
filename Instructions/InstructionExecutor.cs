@@ -69,7 +69,7 @@ namespace ProcessorSim.Instructions
 
                 foreach (var c in stringValue)
                 {
-                    _processor.RamStack[ramPos] = Convert.ToInt32(c);
+                    _processor.RamStack[ramPos] = (byte) Convert.ToInt32(c);
                     ramPos += 1;
                 }
             }
@@ -77,13 +77,13 @@ namespace ProcessorSim.Instructions
             {
                 var ramPos = _processor.GetFreeRamPos(1);
                 variable.MemoryLocation = ramPos;
-                _processor.RamStack[ramPos] = charValue;
+                _processor.RamStack[ramPos] = (byte) charValue;
             }
             else if (variable.Value is int intValue)
             {
                 var ramPos = _processor.GetFreeRamPos(1);
                 variable.MemoryLocation = ramPos;
-                _processor.RamStack[ramPos] = intValue;
+                _processor.RamStack[ramPos] = (byte) intValue;
             }
             else if (variable.Value is List<string> list)
             {
@@ -92,7 +92,7 @@ namespace ProcessorSim.Instructions
 
                 foreach (var item in list)
                 {
-                    _processor.RamStack[ramPos] = int.Parse(item);
+                    _processor.RamStack[ramPos] = byte.Parse(item);
                     ramPos += 1;
                 }
             }

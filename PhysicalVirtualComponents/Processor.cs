@@ -7,18 +7,17 @@ namespace ProcessorSim.PhysicalVirtualComponents
     internal class Processor
     {
         public List<string> InstructionsToExecute;
-        public int CurrentInstructionNum;
-        public bool ShouldStop;
-        public int[] RamStack;
         public Dictionary<string, Register> Registers;
         public List<Variable> Variables;
+        public int CurrentInstructionNum;
+        public bool ShouldStop;
+        public byte[] RamStack;       
 
         public Processor(int amountOfRam, int amountOfRegisters)
         {
             Registers = new Dictionary<string, Register>();
-            InstructionsToExecute = ReadResource("ProcessorSim.Instructions.InstructionsToExecute.txt")!;
-            CurrentInstructionNum = 0;
-            RamStack = new int[amountOfRam];
+            InstructionsToExecute = ReadResource("ProcessorSim.Instructions.InstructionsToExecute.txt")!;           
+            RamStack = new byte[amountOfRam];
             ShouldStop = false;
 
             for (var i = 0; i <= amountOfRegisters; i++)
