@@ -69,7 +69,7 @@ namespace ProcessorSim.Instructions
 
                 foreach (var c in stringValue)
                 {
-                    _processor.RamStack[ramPos] = (byte) Convert.ToInt32(c);
+                    _processor.RamStack[ramPos] = (byte) c;
                     ramPos += 1;
                 }
             }
