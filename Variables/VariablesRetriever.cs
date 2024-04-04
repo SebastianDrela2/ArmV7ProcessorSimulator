@@ -29,10 +29,10 @@
         {
             return instruction switch
             {
-                _ when instruction.Contains("list") => VariableLineType.List,
-                _ when instruction.Contains("int") => VariableLineType.Integer,
-                _ when instruction.Contains("string") => VariableLineType.String,
-                _ when instruction.Contains("char") => VariableLineType.Char,
+                _ when instruction.StartsWith(".list") => VariableLineType.List,
+                _ when instruction.StartsWith(".int") => VariableLineType.Integer,
+                _ when instruction.StartsWith(".string") => VariableLineType.String,
+                _ when instruction.StartsWith(".char") => VariableLineType.Char,
                 _ => throw new NotImplementedException(),
             };
         }
