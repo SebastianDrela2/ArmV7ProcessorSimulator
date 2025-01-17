@@ -17,6 +17,16 @@ namespace ProcessorSim.Instructions
         {
             var instruction = ParseInstruction(line);           
             
+            if (instruction.SecondParameter is not null &&
+                _processor.Registers.Any(x => x.Key == instruction.FirstParameter) &&
+				_processor.Registers.Any(x => x.Key == instruction.SecondParameter))
+            {
+                var register = ParseRegister(instruction.FirstParameter);
+                var register2 = ParseRegister(instruction.SecondParameter);
+
+                return _actionRetriever.GetLDRInstruction(register, register2);
+            }
+
             if (_processor.Registers.Any(x => x.Key == instruction.FirstParameter))
             {
                 return GetRegisterAction(instruction);
@@ -30,16 +40,7 @@ namespace ProcessorSim.Instructions
             var parsedSecondValue = ParseParameterValue(instruction.SecondParameter);
             var parsedThirdValue = ParseParameterValue(instruction.ThirdParameter);
             var register = ParseRegister(instruction.FirstParameter);
-
-            if (!string.IsNullOrEmpty(instruction.SecondParameter))
-            {
-                var secondParameterIsNotAnInt = !int.TryParse(instruction.SecondParameter, out _);
-
-                if (secondParameterIsNotAnInt && instruction.Operation is "LDR")
-                {
-                    return _actionRetriever.LoadMemoryIntoRegister(register, instruction.SecondParameter);
-                }
-            }
+        
             return _actionRetriever.GetArithemticRegisterInstruction(instruction.Operation, register, parsedSecondValue, parsedThirdValue);
         }
 
@@ -63,7 +64,7 @@ namespace ProcessorSim.Instructions
             var parts = input.Split(' ');           
             var instruction = new Instruction();
 
-            instruction.Operation = parts[0];
+			Enum.TryParse(parts[0], out instruction.Operation);
 
             if (parts.Length > 1)
             {
@@ -78,7 +79,6 @@ namespace ProcessorSim.Instructions
             if (parts.Length > 3)
             {
                 instruction.ThirdParameter = parts[3];
-
             }
 
             return instruction;

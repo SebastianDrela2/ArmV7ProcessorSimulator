@@ -26,7 +26,7 @@
         {
             for (var i = 0; i < messageLength; i++)
             {
-                var c = Convert.ToChar(_processor.RamStack[messageRamPos]);
+                var c = Convert.ToChar(_processor.Memory[messageRamPos]);
                 Console.Write(c);
 
                 messageRamPos++;
@@ -37,15 +37,15 @@
 
         public void DisplayAllocatedStackMemory()
         {
-            for (var pos = 0; pos < _processor.RamStack.Length; pos++)
+            for (var pos = 0; pos < _processor.Memory.Length; pos++)
             {
-                if (_processor.RamStack[pos] is 0)
+                if (_processor.Memory[pos] is 0)
                 {
                     // unallocated memory, just break no need to display anymore.
                     break;
                 }
 
-                Console.WriteLine($"Ram Pos: {pos} Value: {_processor.RamStack[pos]}");
+                Console.WriteLine($"Ram Pos: {pos} Value: {_processor.Memory[pos]}");
             }
         }
 

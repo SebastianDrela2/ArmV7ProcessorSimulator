@@ -1,6 +1,5 @@
 ﻿using ProcessorSim.Instructions;
 using ProcessorSim.PhysicalVirtualComponents;
-using ProcessorSim.Variables;
 
 namespace ProcessorSim
 {
@@ -8,28 +7,21 @@ namespace ProcessorSim
     {
         static void Main()
         {
-            var processor = new Processor(100, 7);
+            var processor = new Processor(4096, 7);
             var system = new PhysicalVirtualComponents.System(processor);
             var instructionExecutor = new InstructionExecutor(processor, system);
             var instructionRetriever = new InstructionRetriever(instructionExecutor);
             var instructionsResolver = new InstructionsResolver(processor, instructionRetriever);
-            var variablesRetriever = new VariablesRetriever();
-
-            var variables = variablesRetriever.GetVariables(processor.InstructionsToExecute);
-
-            foreach (var variable in variables)
-            {
-                processor.LoadValIntoStack(instructionExecutor, variable);
-            }
-
-            processor.SetVariables(variables);
-
+            
             Execute(processor, system, instructionsResolver);
         }
 
         private static void Execute(Processor processor, PhysicalVirtualComponents.System system, InstructionsResolver instructionsResolver)
-        {           
-            while (processor.CurrentInstructionNum < processor.InstructionsToExecute.Count)
+        {
+			processor.CurrentInstructionNum = 0;
+            var lastInstructionIndex = processor.InstructionsToExecute.Keys.Last();
+
+            while (processor.CurrentInstructionNum < lastInstructionIndex)
             {
                 if (processor.ShouldStop)
                 {
@@ -38,11 +30,12 @@ namespace ProcessorSim
 
                 var instruction = processor.GetInstruction();
                 processor.ExecuteInstruction(instructionsResolver, instruction);
-                processor.CurrentInstructionNum++;
+
+                processor.CurrentInstructionNum = processor.GetNextKey(processor.InstructionsToExecute, processor.CurrentInstructionNum);
             }
 
             Console.WriteLine();
             system.DisplayAllocatedStackMemory();
-        }
-    }
+        }		
+	}
 }

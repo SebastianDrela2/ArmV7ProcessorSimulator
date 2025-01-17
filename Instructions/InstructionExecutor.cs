@@ -1,5 +1,4 @@
 ﻿using ProcessorSim.PhysicalVirtualComponents;
-using ProcessorSim.Variables;
 
 namespace ProcessorSim.Instructions
 {
@@ -53,59 +52,15 @@ namespace ProcessorSim.Instructions
 
             register.Value = value;
         }
-
-        public void LoadMemoryIntoRegister(Register register, string value)
-        {
-            var valueMemoryLocation = _processor.GetMemoryLocationForVariable(value);
-            register.Value = valueMemoryLocation;
-        }
-
-        public void LoadValIntoStack(Variable variable)
-        {
-            if (variable.Value is string stringValue)
-            {
-                var ramPos = _processor.GetFreeRamPos(stringValue.Length);
-                variable.MemoryLocation = ramPos;
-
-                foreach (var c in stringValue)
-                {
-                    _processor.RamStack[ramPos] = (byte) c;
-                    ramPos += 1;
-                }
-            }
-            else if (variable.Value is char charValue)
-            {
-                var ramPos = _processor.GetFreeRamPos(1);
-                variable.MemoryLocation = ramPos;
-                _processor.RamStack[ramPos] = (byte) charValue;
-            }
-            else if (variable.Value is int intValue)
-            {
-                var ramPos = _processor.GetFreeRamPos(1);
-                variable.MemoryLocation = ramPos;
-                _processor.RamStack[ramPos] = (byte) intValue;
-            }
-            else if (variable.Value is List<string> list)
-            {
-                var ramPos = _processor.GetFreeRamPos(list.Count);
-                variable.MemoryLocation = ramPos;
-
-                foreach (var item in list)
-                {
-                    _processor.RamStack[ramPos] = byte.Parse(item);
-                    ramPos += 1;
-                }
-            }
-        }
-
+        
         public void JumpBranch(string branchName)
-        {
-            var branchLine = _processor.InstructionsToExecute.First(x => x.Contains($"{branchName}:"));
-            var branchIndex = _processor.InstructionsToExecute.IndexOf(branchLine);
-            _processor.Registers["lr"].Value = _processor.CurrentInstructionNum;
-            _processor.CurrentInstructionNum = branchIndex;
-            
-        }
+        {           
+            var branchIndex = _processor.InstructionsToExecute.First(x => x.Value.Contains($"{branchName}:")).Key;
+            var nextIndexFromBranch = _processor.GetNextKey(_processor.InstructionsToExecute, branchIndex);
+			
+			_processor.Registers["lr"].Value = _processor.CurrentInstructionNum;
+			_processor.CurrentInstructionNum = nextIndexFromBranch;
+		}
 
         public void JumpBranchIfGreaterThanOrEquals(string branchName)
         {
@@ -137,6 +92,11 @@ namespace ProcessorSim.Instructions
             {
                 JumpBranch(branchName);
             }
+        }
+
+        public void LoadDataFromRegister(Register register, Register register2)
+        {
+            register.Value = register2.Value;
         }
 
         public void EndBranch()

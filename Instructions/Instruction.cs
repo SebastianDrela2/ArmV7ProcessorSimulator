@@ -2,7 +2,7 @@
 {
     public class Instruction
     {
-        public string Operation { get; set; } = string.Empty;
+        public OpCode Operation;
         public string FirstParameter { get; set; } = string.Empty;
         public string SecondParameter { get; set; } = string.Empty;
         public string ThirdParameter { get; set; } = string.Empty;
